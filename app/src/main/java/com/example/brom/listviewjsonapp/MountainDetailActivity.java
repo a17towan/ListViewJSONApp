@@ -1,11 +1,11 @@
-package com.example.brom.activitiesapp;
+package com.example.brom.listviewjsonapp;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class MountainDetailsActivity extends AppCompatActivity {
+public class MountainDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
