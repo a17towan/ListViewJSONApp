@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,11 +25,11 @@ import java.util.Arrays;
 
 
 
-// Create a new class, Mountain, that can hold your JSON data
+// Create a new class, Mountain, that can hold your JSON data *
 
-// Create a ListView as in "Assignment 1 - Toast and ListView"
+// Create a ListView as in "Assignment 1 - Toast and ListView" *
 
-// Retrieve data from Internet service using AsyncTask and the included networking code
+// Retrieve data from Internet service using AsyncTask and the included networking code *
 
 // Parse the retrieved JSON and update the ListView adapter
 
@@ -66,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+        new FetchData().execute();
     }
 
     private class FetchData extends AsyncTask<Void,Void,String>{
@@ -81,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 // Construct the URL for the Internet service
-                URL url = new URL("_ENTER_THE_URL_TO_THE_PHP_SERVICE_SERVING_JSON_HERE_");
+                URL url = new URL("http://wwwlab.iit.his.se/brom/kurser/mobilprog/dbservice/admin/getdataasjson.php?type=brom");
 
                 // Create the request to the PHP-service, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -139,6 +144,22 @@ public class MainActivity extends AppCompatActivity {
 
             // Implement a parsing code that loops through the entire JSON and creates objects
             // of our newly created Mountain class.
+
+            setContentView(R.layout.parse);
+            Log.d("ToweDebugg", "Debugging starting");
+            Log.d("ToweDebugg", o);
+
+            try {
+                JSONArray json1 = new JSONArray(o);
+
+                Log.d("ToweDebugg", json1.toString());
+                Log.d("ToweDebugg", json1.getJSONObject(0).getString("ID"));
+
+            } catch (JSONException e) {
+                Log.e("brom","E:"+e.getMessage());
+            }
+
+            
         }
     }
 }
