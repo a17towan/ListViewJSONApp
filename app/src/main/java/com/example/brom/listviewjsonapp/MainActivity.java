@@ -159,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("brom","E:"+e.getMessage());
             }
 
-            
         }
     }
 }
