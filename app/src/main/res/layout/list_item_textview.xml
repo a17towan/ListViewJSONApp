@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/list_item_textviewtest"
-    android:textSize="30sp"
+    android:textSize="25sp"
     android:padding="45dp"
-    android:height="150dp">
+    android:height="160dp">
 </TextView>
