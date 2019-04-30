@@ -46,14 +46,16 @@ public class MainActivity extends AppCompatActivity {
     // Create ArrayLists from the raw data above and use these lists when populating your ListView.
     private ArrayList<String> listData=new ArrayList<>(Arrays.asList(mountainNames));
 
+    private ArrayAdapter<String> adapter;
+    ListView my_listview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(getApplicationContext(), R.layout.list_item_textview, R.id.list_item_textviewtest, listData);
-
-        ListView my_listview = (ListView) findViewById(R.id.my_listview);
+        adapter=new ArrayAdapter<String>(getApplicationContext(), R.layout.list_item_textview, R.id.list_item_textviewtest);
+        my_listview = (ListView) findViewById(R.id.my_listview);
         my_listview.setAdapter(adapter);
 
         my_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -71,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         new FetchData().execute();
+
+
     }
 
     private class FetchData extends AsyncTask<Void,Void,String>{
@@ -145,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             // Implement a parsing code that loops through the entire JSON and creates objects
             // of our newly created Mountain class.
 
-            setContentView(R.layout.parse);
+            //setContentView(R.layout.parse);
             Log.d("ToweDebugg", "Debugging starting");
             Log.d("ToweDebugg", o);
 
@@ -153,12 +157,16 @@ public class MainActivity extends AppCompatActivity {
                 JSONArray json1 = new JSONArray(o);
 
                 Log.d("ToweDebugg", json1.toString());
-                Log.d("ToweDebugg", json1.getJSONObject(0).getString("ID"));
-
+                for(int i = 0; i < json1.length(); i++) {
+                    Log.d("ToweDebugg", json1.getJSONObject(i).getString("name"));
+                    adapter.add(json1.getJSONObject(i).getString("name"));
+                }
             } catch (JSONException e) {
-                Log.e("brom","E:"+e.getMessage());
+                Log.e("ToweDebugg","E:"+e.getMessage());
             }
+/*
 
+            */
         }
     }
 }
