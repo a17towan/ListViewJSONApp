@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -44,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private String[] mountainLocations = {"Alps","Alps","Alaska"};
     private int[] mountainHeights ={4478,4808,6190};
     // Create ArrayLists from the raw data above and use these lists when populating your ListView.
-    private ArrayList<String> listData=new ArrayList<>(Arrays.asList(mountainNames));
+    //private ArrayList<String> listData=new ArrayList<>(Arrays.asList(mountainNames));
+    private ArrayList<Mountain> mountains = new ArrayList<>();
 
     private ArrayAdapter<String> adapter;
     ListView my_listview;
@@ -62,12 +64,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String korv = new String("");
+
                 Intent intent = new Intent(MainActivity.this, MountainDetailActivity.class);
-                intent.putExtra("HEIGHT", mountainHeights[i]);
-                intent.putExtra("LOCATION", mountainLocations[i]);
-                intent.putExtra("NAME", mountainNames[i]);
+                intent.putExtra("HEIGHT", mountains.get(i).getHeight() );
+                intent.putExtra("LOCATION", mountains.get(i).getLocation());
+                intent.putExtra("NAME", mountains.get(i).getName());
+
                 startActivity(intent);
-                Toast.makeText(getApplicationContext(), korv+"Name:"+mountainNames[i]+ "|Location:"+mountainLocations[i]+"|Mountain height:"+mountainHeights[i], Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), korv+"Name:"+mountains.get(i).getName()+ "|Location:"+mountains.get(i).getLocation()+"|Mountain height:"+mountains.get(i).getHeight(), Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -158,8 +162,13 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.d("ToweDebugg", json1.toString());
                 for(int i = 0; i < json1.length(); i++) {
-                    Log.d("ToweDebugg", json1.getJSONObject(i).getString("name"));
+                     Log.d("ToweDebugg", json1.getJSONObject(i).getString("name"));
                     adapter.add(json1.getJSONObject(i).getString("name"));
+                    mountains.add(new Mountain(
+                            json1.getJSONObject(i).getString("name"),
+                            json1.getJSONObject(i).getString("location"),
+                            json1.getJSONObject(i).getInt("size")
+                    ));
                 }
             } catch (JSONException e) {
                 Log.e("ToweDebugg","E:"+e.getMessage());
